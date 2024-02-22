@@ -22,14 +22,13 @@ import requests
     # you can also use .children
 
 url = "https://www.vlr.gg/295610/loud-vs-sentinels-champions-tour-2024-americas-kickoff-opening-b"
-result = requests.get(url)
-doc = BeautifulSoup(result.text, "html.parser")
+page = requests.get(url)
+soup = BeautifulSoup(page.text, "html.parser")
 
 # tbody = doc.find_all("tbody") # THIS IS TO FIND ALL THE TABLES IN THE PAGE
 
-tbody = doc.tbody
+tbody = soup.tbody
 trs = tbody.contents
-playerlinks = tbody.find_all('a')
 
 playerslist = tbody.find_all(['div'], class_="text-of")
 
