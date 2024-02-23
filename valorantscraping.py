@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 
+from selenium import webdriver
+PATH = "/Users/victorpham/Desktop/chromedriver.exe"
+
 #-----EXAMPLE WEB SCRAPING ON NEWEGG FOR PRICE--------#
 
 # url = "https://www.newegg.com/p/3D5-002P-00044?Item=3D5-002P-00044&cm_sp=Homepage_SS-_-P2_3D5-002P-00044-_-02192024"
@@ -31,6 +34,7 @@ tbody = soup.tbody
 trs = tbody.contents
 
 playerslist = tbody.find_all(['div'], class_="text-of")
+
 
 players = []
 
