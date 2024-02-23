@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
+
 options = webdriver.ChromeOptions() # stops driver from closing immediately
 options.add_experimental_option("detach", True)
 
@@ -14,6 +15,10 @@ try: # Implicit Wait: make the webdriver wait a couple of seconds to load the pa
     driver.implicitly_wait(1)
 
     # Reminder: find_element to find singular element, and find_elements to find more than one element on the page !!!
+
+    # Scraping Tournament Name
+    tournament = driver.find_element(By.XPATH, "//div[@style='font-weight: 700;']").text
+    print(tournament)
 
     # Scraping Team Names
     teamsElements = driver.find_elements(By.CLASS_NAME, value="wf-title-med")
@@ -27,6 +32,8 @@ try: # Implicit Wait: make the webdriver wait a couple of seconds to load the pa
     t2score = driver.find_element(By.CLASS_NAME, value="match-header-vs-score-loser").text
     finalScore = t1score + ":" + t2score
     print(finalScore)
+
+
     
 
 
