@@ -37,7 +37,8 @@ try: # Implicit Wait: make the webdriver wait a couple of seconds to load the pa
     mapsElements = driver.find_elements(By.CLASS_NAME, value="vm-stats-gamesnav-item")
     maps = []
     for map in mapsElements:
-        maps.append(map.text)
+        s = ''.join(filter(str.isalpha, map.text))
+        maps.append(s)
     print(maps)    
 
 
