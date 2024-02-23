@@ -1,8 +1,15 @@
 from bs4 import BeautifulSoup
 import requests
-
 from selenium import webdriver
-PATH = "/Users/victorpham/Desktop/chromedriver.exe"
+
+options = webdriver.ChromeOptions() # stops driver from closing immediately
+options.add_experimental_option("detach", True)
+
+driver = webdriver.Chrome(options=options)
+driver.get("https://www.google.com/")
+
+
+
 
 #-----EXAMPLE WEB SCRAPING ON NEWEGG FOR PRICE--------#
 
