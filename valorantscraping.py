@@ -16,20 +16,26 @@ try: # Implicit Wait: make the webdriver wait a couple of seconds to load the pa
 
     # Reminder: find_element to find singular element, and find_elements to find more than one element on the page !!!
 
+    matchHeader = driver.find_element(By.CLASS_NAME, value="match-header") # Match Header Section/Container
+
     # Scraping Tournament Name
-    tournament = driver.find_element(By.XPATH, "//div[@style='font-weight: 700;']").text
+    tournament = matchHeader.find_element(By.XPATH, "//div[@style='font-weight: 700;']").text
     print(tournament)
 
+    # Scraping Date
+    date = matchHeader.find_element(By.CLASS_NAME, value="moment-tz-convert").get_attribute('data-utc-ts') # added get_attribute to convert from word to to number form
+    print(date)
+
     # Scraping Team Names
-    teamsElements = driver.find_elements(By.CLASS_NAME, value="wf-title-med")
+    teamsElements = matchHeader.find_elements(By.CLASS_NAME, value="wf-title-med")
     teams = []
     for team in teamsElements:
         teams.append(team.text)
     print(teams)
 
     # Scraping Score
-    t1score = driver.find_element(By.CLASS_NAME, value="match-header-vs-score-winner").text
-    t2score = driver.find_element(By.CLASS_NAME, value="match-header-vs-score-loser").text
+    t1score = matchHeader.find_element(By.CLASS_NAME, value="match-header-vs-score-winner").text
+    t2score = matchHeader.find_element(By.CLASS_NAME, value="match-header-vs-score-loser").text
     finalScore = t1score + ":" + t2score
     print(finalScore)
 
@@ -37,9 +43,15 @@ try: # Implicit Wait: make the webdriver wait a couple of seconds to load the pa
     mapsElements = driver.find_elements(By.CLASS_NAME, value="vm-stats-gamesnav-item")
     maps = []
     for map in mapsElements:
-        s = ''.join(filter(str.isalpha, map.text))
+        s = ''.join(filter(str.isalpha, map.text)) # filter out the numbers from the map names
         maps.append(s)
-    print(maps)    
+    print(maps)
+
+    statsSection = driver.find_element(By.CLASS_NAME, value="vm-stats") # Stats container/section
+
+
+
+
 
 
 
