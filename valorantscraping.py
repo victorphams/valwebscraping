@@ -12,61 +12,64 @@ options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.vlr.gg/295610/loud-vs-sentinels-champions-tour-2024-americas-kickoff-opening-b/?game=153737&tab=overview")
 
-table1 = pd.DataFrame(columns=["Tournament", "Date", "Teams", "Score", "Maps", "Player"])
-print(table1)
-table1.to_csv("teststats.csv")
+table1 = pd.DataFrame(columns=["Date", "TeamVS", "Map", "Score", "Player", "Agent", "ACS", "K", "D", "A"])
 
-try: # Implicit Wait: make the webdriver wait a couple of seconds to load the page before we continue onto the rest of the code
-    driver.implicitly_wait(1)
+def scrapeMatch(url):
 
-    # Reminder: find_element to find singular element, and find_elements to find more than one element on the page !!!
+    options = webdriver.ChromeOptions() # stops driver from closing immediately
+    options.add_experimental_option("detach", True)
+    driver = webdriver.Chrome(options=options)
+    driver.get(url)
 
-    matchHeader = driver.find_element(By.CLASS_NAME, value="match-header") # Match Header Section/Container
+    try: # Implicit Wait: make the webdriver wait a couple of seconds to load the page before we continue onto the rest of the code
+        driver.implicitly_wait(1)
 
-    # Scraping Tournament Name
-    tournament = matchHeader.find_element(By.XPATH, "//div[@style='font-weight: 700;']").text
-    print(tournament)
+        # Reminder: find_element to find singular element, and find_elements to find more than one element on the page !!!
 
-    # Scraping Date
-    date = matchHeader.find_element(By.CLASS_NAME, value="moment-tz-convert").get_attribute('data-utc-ts') # added get_attribute to convert from word to to number form
-    print(date)
+        matchHeader = driver.find_element(By.CLASS_NAME, value="match-header") # Match Header Section/Container
 
-    # Scraping Team Names
-    teamsElements = matchHeader.find_elements(By.CLASS_NAME, value="wf-title-med")
-    teams = []
-    for team in teamsElements:
-        teams.append(team.text)
-    print(teams)
+        # Scraping Tournament Name
+        tournament = matchHeader.find_element(By.XPATH, "//div[@style='font-weight: 700;']").text
+        print(tournament)
 
-    # Scraping Score
-    t1score = matchHeader.find_element(By.CLASS_NAME, value="match-header-vs-score-winner").text
-    t2score = matchHeader.find_element(By.CLASS_NAME, value="match-header-vs-score-loser").text
-    finalScore = t1score + ":" + t2score
-    print(finalScore)
+        # Scraping Date
+        date = matchHeader.find_element(By.CLASS_NAME, value="moment-tz-convert").get_attribute('data-utc-ts') # added get_attribute to convert from word to to number form
+        print(date)
 
-    # Scraping Map Names
-    mapsElements = driver.find_elements(By.CLASS_NAME, value="vm-stats-gamesnav-item")
-    maps = []
-    for map in mapsElements:
-        s = ''.join(filter(str.isalpha, map.text)) # filter out the numbers from the map names
-        maps.append(s)
-    print(maps)
+        # Scraping Team Names
+        teamsElements = matchHeader.find_elements(By.CLASS_NAME, value="wf-title-med")
+        teams = []
+        for team in teamsElements:
+            teams.append(team.text)
+        print(teams)
 
-    statsSection = driver.find_element(By.CLASS_NAME, value="vm-stats") # Stats container/section
+        # Scraping Score
+        t1score = matchHeader.find_element(By.CLASS_NAME, value="match-header-vs-score-winner").text
+        t2score = matchHeader.find_element(By.CLASS_NAME, value="match-header-vs-score-loser").text
+        finalScore = t1score + ":" + t2score
+        print(finalScore)
 
+        # Scraping Map Names
+        mapsElements = driver.find_elements(By.CLASS_NAME, value="vm-stats-gamesnav-item")
+        maps = []
+        for map in mapsElements:
+            s = ''.join(filter(str.isalpha, map.text)) # filter out the numbers from the map names
+            maps.append(s)
+        print(maps)
 
-
-
-
-
-
+        statsSection = driver.find_element(By.CLASS_NAME, value="vm-stats") # Stats container/section
 
 
-    
 
 
-finally:
-    driver.quit()
+
+
+
+        
+
+
+    finally:
+        driver.quit()
 
 
 
