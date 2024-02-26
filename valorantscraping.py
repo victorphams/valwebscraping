@@ -5,13 +5,6 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 import time
 
-
-options = webdriver.ChromeOptions() # stops driver from closing immediately
-options.add_experimental_option("detach", True)
-
-driver = webdriver.Chrome(options=options)
-driver.get("https://www.vlr.gg/295610/loud-vs-sentinels-champions-tour-2024-americas-kickoff-opening-b/?game=153737&tab=overview")
-
 table1 = pd.DataFrame(columns=["Date", "TeamVS", "Map", "Score", "Player", "Agent", "ACS", "K", "D", "A"])
 
 def scrapeMatch(url):
