@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import pandas as pd
 import time
 
 
@@ -10,6 +11,10 @@ options.add_experimental_option("detach", True)
 
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.vlr.gg/295610/loud-vs-sentinels-champions-tour-2024-americas-kickoff-opening-b/?game=153737&tab=overview")
+
+table1 = pd.DataFrame(columns=["Tournament", "Date", "Teams", "Score", "Maps", "Player"])
+print(table1)
+table1.to_csv("teststats.csv")
 
 try: # Implicit Wait: make the webdriver wait a couple of seconds to load the page before we continue onto the rest of the code
     driver.implicitly_wait(1)
@@ -48,6 +53,8 @@ try: # Implicit Wait: make the webdriver wait a couple of seconds to load the pa
     print(maps)
 
     statsSection = driver.find_element(By.CLASS_NAME, value="vm-stats") # Stats container/section
+
+
 
 
 
